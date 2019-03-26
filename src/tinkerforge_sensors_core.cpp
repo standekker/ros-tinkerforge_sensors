@@ -238,9 +238,9 @@ void TinkerforgeSensors::publishImuMessage(SensorDevice *sensor)
 
     // orientation_covariance
     boost::array<const double, 9> oc =
-      { 0.1, 0.1, 0.1,
-        0.1, 0.1, 0.1,
-        0.1, 0.1, 0.1};
+      { this->orientation_stddev, 0, 0,
+        0, this->orientation_stddev, 0,
+        0, 0, this->orientation_stddev};
 
     imu_msg.orientation_covariance = oc;
 
@@ -251,9 +251,9 @@ void TinkerforgeSensors::publishImuMessage(SensorDevice *sensor)
 
     // velocity_covariance
     boost::array<const double, 9> vc =
-      { 0.1, 0.1, 0.1,
-        0.1, 0.1, 0.1,
-        0.1, 0.1, 0.1};
+    { this->angular_velocity_stddev, 0, 0,
+      0, this->angular_velocity_stddev, 0,
+      0, 0, this->angular_velocity_stddev};
     imu_msg.angular_velocity_covariance = vc;
 
     imu_msg.linear_acceleration.x = f_acc_x;
@@ -262,9 +262,9 @@ void TinkerforgeSensors::publishImuMessage(SensorDevice *sensor)
 
     // linear_acceleration_covariance
     boost::array<const double, 9> lac =
-      { 0.1, 0.1, 0.1,
-        0.1, 0.1, 0.1,
-        0.1, 0.1, 0.1};
+    { this->linear_acceleration_stddev, 0, 0,
+      0, this->linear_acceleration_stddev, 0,
+      0, 0, this->linear_acceleration_stddev};
     imu_msg.linear_acceleration_covariance = lac;
 
     sensor->getPub().publish(imu_msg);
@@ -317,9 +317,9 @@ void TinkerforgeSensors::publishMagneticFieldMessage(SensorDevice *sensor)
     mf_msg.magnetic_field.z = z;
 
     boost::array<const double, 9> mfc =
-      { 0.01, 0.01, 0.01,
-        0.01, 0.01, 0.01,
-        0.01, 0.01, 0.01};
+    { this->magnetic_field_stddev, 0, 0,
+      0, this->magnetic_field_stddev, 0,
+      0, 0, this->magnetic_field_stddev};
 
     mf_msg.magnetic_field_covariance = mfc;
 

@@ -26,7 +26,12 @@ public:
   //! Constructur
   TinkerforgeSensors();
 
-  TinkerforgeSensors(std::string topic, int port);
+  TinkerforgeSensors(std::string topic,
+                     int port,
+                     double linear_acceleration_stddev,
+                     double angular_velocity_stddev,
+                     double magnetic_field_stddev,
+                     double orientation_stddev);
 
   //! Destructor
   ~TinkerforgeSensors();

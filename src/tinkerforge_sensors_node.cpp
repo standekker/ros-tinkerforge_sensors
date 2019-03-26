@@ -28,6 +28,10 @@ int main (int argc, char **argv)
   int imu_convergence_speed;
   int port;
   string host;
+  double linear_acceleration_stddev;
+  double angular_velocity_stddev;
+  double magnetic_field_stddev;
+  double orientation_stddev;
 
   signal(SIGINT, sigintHandler);
 

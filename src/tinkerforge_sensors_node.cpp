@@ -43,7 +43,7 @@ int main (int argc, char **argv)
   private_node_handle_.param("linear_acceleration_stddev", linear_acceleration_stddev, double(0.1));
   private_node_handle_.param("angular_velocity_stddev", angular_velocity_stddev, double(0.1));
   private_node_handle_.param("magnetic_field_stddev", magnetic_field_stddev, double(0.1));
-  private_node_handle_.param("orientation_stddev ", orientation_stddev , double(0.1));
+  private_node_handle_.param("orientation_stddev", orientation_stddev , double(0.1));
 
 
   // create a new LaserTransformer object.

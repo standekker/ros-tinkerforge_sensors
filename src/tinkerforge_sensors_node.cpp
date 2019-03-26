@@ -47,7 +47,12 @@ int main (int argc, char **argv)
 
 
   // create a new LaserTransformer object.
-  TinkerforgeSensors *node_tfs = new TinkerforgeSensors(host, port);
+  TinkerforgeSensors *node_tfs = new TinkerforgeSensors(host,
+                                                        port,
+                                                        linear_acceleration_stddev,
+                                                        angular_velocity_stddev,
+                                                        magnetic_field_stddev,
+                                                        orientation_stddev);
 
   node_tfs->init();
 

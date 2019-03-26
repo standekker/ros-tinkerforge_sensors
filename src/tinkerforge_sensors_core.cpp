@@ -40,7 +40,12 @@ TinkerforgeSensors::TinkerforgeSensors()
   imu_convergence_speed = 0;
 }
 
-TinkerforgeSensors::TinkerforgeSensors(std::string host, int port)
+TinkerforgeSensors::TinkerforgeSensors(std::string host,
+                                       int port,
+                                       double linear_acceleration_stddev,
+                                       double angular_velocity_stddev,
+                                       double magnetic_field_stddev,
+                                       double orientation_stddev)
 {
   if (host.length() == 0)
     this->host = "localhost";
@@ -50,6 +55,12 @@ TinkerforgeSensors::TinkerforgeSensors(std::string host, int port)
     this->port = 4223;
   else
     this->port = port;
+
+  this->linear_acceleration_stddev = linear_acceleration_stddev;
+  this->angular_velocity_stddev = angular_velocity_stddev;
+  this->magnetic_field_stddev = magnetic_field_stddev;
+  this->orientation_stddev = orientation_stddev;
+
 }
 
 /*----------------------------------------------------------------------
@@ -182,7 +193,7 @@ void TinkerforgeSensors::publishImuMessage(SensorDevice *sensor)
       f_acc_x = (float(acc_x)/1000.0)*9.80605;
       f_acc_y = (float(acc_y)/1000.0)*9.80605;
       f_acc_z = (float(acc_z)/1000.0)*9.80605;
-      
+
       imu_msg.orientation.x = w;
       imu_msg.orientation.y = z*-1;
       imu_msg.orientation.z = y;
@@ -208,7 +219,7 @@ void TinkerforgeSensors::publishImuMessage(SensorDevice *sensor)
       f_acc_x = float(acc_x) / 100.0;
       f_acc_y = float(acc_y) / 100.0;
       f_acc_z = float(acc_z) / 100.0;
-      
+
       imu_msg.orientation.x = y;
       imu_msg.orientation.y = z;
       imu_msg.orientation.z = w;
@@ -491,7 +502,7 @@ void TinkerforgeSensors::publishIlluminanceMessage(SensorDevice *sensor)
     illum_msg.header.seq =  sensor->getSeq();
     illum_msg.header.stamp = ros::Time::now();
     illum_msg.header.frame_id = sensor->getFrame();
-    
+
     illum_msg.illuminance = illuminance;
     illum_msg.variance = 0;
 
@@ -622,7 +633,7 @@ void TinkerforgeSensors::callbackEnumerate(const char *uid, const char *connecte
   else if (device_identifier == DUAL_BUTTON_DEVICE_IDENTIFIER)
   {
     ROS_INFO_STREAM("found DualButton with UID:" << uid);
-    
+
     DualButton *db = new DualButton();
     dual_button_create(db, uid, &(tfs->ipcon));
 

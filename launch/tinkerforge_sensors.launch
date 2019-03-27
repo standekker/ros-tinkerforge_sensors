@@ -8,6 +8,7 @@
       angular_velocity_stddev : 0.1
       magnetic_field_stddev : 0.1
       orientation_stddev : 0.1
+      frame_id : "imu_link"
     </rosparam>
   </node>
 </launch>

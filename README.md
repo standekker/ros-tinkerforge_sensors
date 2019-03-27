@@ -68,18 +68,25 @@ None.
 
 ~frame_id (string, default: imu_link)
   The frame ID to set in outgoing messages.
+
 ~linear_acceleration_stddev (double, default: 0.1)
   Square root of the linear_acceleration_covariance diagonal elements in m/s^2. Overrides any values reported by the sensor.
+
 ~angular_velocity_stddev (double, default: 0.1)
   Square root of the angular_velocity_covariance diagonal elements in rad/s. Overrides any values reported by the sensor.
+
 ~magnetic_field_stddev (double, default: 0.1)
   Square root of the magnetic_field_covariance diagonal elements in Tesla. Overrides any values reported by the sensor.
+
 ~orientation_stddev (double, default: 0.1)
   Square root of the orientation_covariance diagonal elements in rad. Overrides any values reported by the sensor.
+
 ~port (int, default: 4223)
   Port of the tinkerforge brickv server.
+
 ~ip (string, default: localhost)
   Ip of the tinkerforge brickv server.
+
 ~rate (int, default: 100)
   Sample frequency of the sensor in Hz.
 

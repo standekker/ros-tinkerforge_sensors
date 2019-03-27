@@ -80,7 +80,7 @@ None.
   Port of the tinkerforge brickv server.
 ~ip (string, default: localhost)
   Ip of the tinkerforge brickv server.
-~rate (int, default: 10)
+~rate (int, default: 100)
   Sample frequency of the sensor in Hz.
 
 ### Required tf Transforms

@@ -38,7 +38,7 @@ int main (int argc, char **argv)
 
   // while using different parameters.
   ros::NodeHandle private_node_handle_("~");
-  private_node_handle_.param("rate", rate, int(10));
+  private_node_handle_.param("rate", rate, int(100));
   private_node_handle_.param("host", host, string("localhost"));
   private_node_handle_.param("port", port, int(4223));
   private_node_handle_.param("frame_id", frame_id, string("imu_link"));

@@ -39,19 +39,60 @@ Workspace kompilieren / build workspace
 
 `catkin_make`
 
-### Ausführen / run node
-
-`rosrun tinkerforge_sensors tinkerforge_sensors_node`
-
-### Launchfile
-
-Argumente
-* port (int) *Tinkerforge Port*
-* ip (string) *Tinkerforge IP*
-
+# Example
+To start using the TinkerForge sensors node, use the example launch file:
 `roslaunch tinkerforge_sensors tinkerforge_sensors.launch`
 
-### ToDo
+# Nodes
+
+## tinkerforge_sensors
+The tinkerforge_sensors node connects to the brickd application and publishes the data on the `/tfsensors/` topic.
+
+### Subscribed topics
+
+None.
+
+### Published topics
+
+tfsensors/imuN([sensor_msgs/Imu Message](http://docs.ros.org/melodic/api/sensor_msgs/html/msg/Imu.html))
+  IMU message, in which N starts at 1 and counts up, if multiple imu's are connected.
+
+tfsensors/magneticN([sensor_msgs/MagneticField Message](http://docs.ros.org/melodic/api/sensor_msgs/html/msg/MagneticField.html))
+  IMU message, in which N starts at 1 and counts up, if multiple imu's are connected.
+
+### Services
+
+None.
+
+### Parameters
+
+~frame_id (string, default: imu_link)
+  The frame ID to set in outgoing messages.
+~linear_acceleration_stddev (double, default: 0.1)
+  Square root of the linear_acceleration_covariance diagonal elements in m/s^2. Overrides any values reported by the sensor.
+~angular_velocity_stddev (double, default: 0.1)
+  Square root of the angular_velocity_covariance diagonal elements in rad/s. Overrides any values reported by the sensor.
+~magnetic_field_stddev (double, default: 0.1)
+  Square root of the magnetic_field_covariance diagonal elements in Tesla. Overrides any values reported by the sensor.
+~orientation_stddev (double, default: 0.1)
+  Square root of the orientation_covariance diagonal elements in rad. Overrides any values reported by the sensor.
+~port (int, default: 4223)
+  Port of the tinkerforge brickv server.
+~ip (string, default: localhost)
+  Ip of the tinkerforge brickv server.
+~rate (int, default: 10)
+  Sample frequency of the sensor in Hz.
+
+### Required tf Transforms
+
+None.
+
+### Provided tf Transform
+
+None.
+
+
+# ToDo
 
 * mehr Sensoren unterstützen / suport more sensors
 * Kalibrierung für Distance US Sensor / calibration for Distance US sensor

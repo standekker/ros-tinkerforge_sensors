@@ -28,6 +28,7 @@ public:
 
   TinkerforgeSensors(std::string topic,
                      int port,
+                     std::string frame_id,
                      double linear_acceleration_stddev,
                      double angular_velocity_stddev,
                      double magnetic_field_stddev,
@@ -92,6 +93,8 @@ private:
   std::string host;
   //! The Tinkerforge PORT
   int port;
+  //! frame_id
+  std::string frame_id;
   //! IMU covariances
   double linear_acceleration_stddev;
   double angular_velocity_stddev;

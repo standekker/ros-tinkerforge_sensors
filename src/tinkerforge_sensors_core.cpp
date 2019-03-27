@@ -42,6 +42,7 @@ TinkerforgeSensors::TinkerforgeSensors()
 
 TinkerforgeSensors::TinkerforgeSensors(std::string host,
                                        int port,
+                                       std::string frame_id,
                                        double linear_acceleration_stddev,
                                        double angular_velocity_stddev,
                                        double magnetic_field_stddev,
@@ -56,6 +57,7 @@ TinkerforgeSensors::TinkerforgeSensors(std::string host,
   else
     this->port = port;
 
+  this->frame_id = frame_id;
   this->linear_acceleration_stddev = linear_acceleration_stddev;
   this->angular_velocity_stddev = angular_velocity_stddev;
   this->magnetic_field_stddev = magnetic_field_stddev;
@@ -234,7 +236,7 @@ void TinkerforgeSensors::publishImuMessage(SensorDevice *sensor)
     // message header
     imu_msg.header.seq = sensor->getSeq();
     imu_msg.header.stamp = current_time;
-    imu_msg.header.frame_id = sensor->getFrame();
+    imu_msg.header.frame_id = std::string("/") + this->frame_id;
 
     // orientation_covariance
     boost::array<const double, 9> oc =

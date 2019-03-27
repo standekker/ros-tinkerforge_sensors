@@ -28,6 +28,7 @@ int main (int argc, char **argv)
   int imu_convergence_speed;
   int port;
   string host;
+  string frame_id;
   double linear_acceleration_stddev;
   double angular_velocity_stddev;
   double magnetic_field_stddev;
@@ -40,6 +41,7 @@ int main (int argc, char **argv)
   private_node_handle_.param("rate", rate, int(10));
   private_node_handle_.param("host", host, string("localhost"));
   private_node_handle_.param("port", port, int(4223));
+  private_node_handle_.param("frame_id", frame_id, string("imu_link"));
   private_node_handle_.param("linear_acceleration_stddev", linear_acceleration_stddev, double(0.1));
   private_node_handle_.param("angular_velocity_stddev", angular_velocity_stddev, double(0.1));
   private_node_handle_.param("magnetic_field_stddev", magnetic_field_stddev, double(0.1));
@@ -49,6 +51,7 @@ int main (int argc, char **argv)
   // create a new LaserTransformer object.
   TinkerforgeSensors *node_tfs = new TinkerforgeSensors(host,
                                                         port,
+                                                        frame_id,
                                                         linear_acceleration_stddev,
                                                         angular_velocity_stddev,
                                                         magnetic_field_stddev,

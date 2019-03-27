@@ -28,13 +28,7 @@ struct SensorConf
 class SensorDevice
 {
 public:
-  SensorDevice(void *dev,
-               std::string uid,
-               std::string topic,
-               uint16_t type,
-               SensorClass sclass,
-               uint8_t rate,
-               std::string frame_id)
+  SensorDevice(void *dev, std::string uid, std::string topic, uint16_t type, SensorClass sclass, uint8_t rate)
   {
     this->dev = dev;
     this->uid = uid;
@@ -42,7 +36,7 @@ public:
     this->type = type;
     this->sclass = sclass;
     this->rate = rate;
-    this->frame = frame_id;
+    this->frame = "/base_link";
     //this->pub = NULL;
     if (topic.size() == 0)
       buildTopic(this);

@@ -602,7 +602,7 @@ void TinkerforgeSensors::callbackEnumerate(const char *uid, const char *connecte
     imu_leds_on(imu);
     tfs->imu_init_time = ros::Time::now();
 
-    SensorDevice *imu_dev = new SensorDevice(imu, uid, topic, IMU_DEVICE_IDENTIFIER, SensorClass::IMU, 10, this->frame_id);
+    SensorDevice *imu_dev = new SensorDevice(imu, uid, topic, IMU_DEVICE_IDENTIFIER, SensorClass::IMU, 10);
     tfs->sensors.push_back(imu_dev);
   }
   else if (device_identifier == IMU_V2_DEVICE_IDENTIFIER)
@@ -613,10 +613,10 @@ void TinkerforgeSensors::callbackEnumerate(const char *uid, const char *connecte
     imu_v2_create(imu_v2, uid, &(tfs->ipcon));
     imu_leds_on(imu_v2);
 
-    SensorDevice *imu_dev = new SensorDevice(imu_v2, uid, topic, IMU_V2_DEVICE_IDENTIFIER, SensorClass::IMU, 10, this->frame_id);
+    SensorDevice *imu_dev = new SensorDevice(imu_v2, uid, topic, IMU_V2_DEVICE_IDENTIFIER, SensorClass::IMU, 10);
     tfs->sensors.push_back(imu_dev);
 
-    imu_dev = new SensorDevice(imu_v2, uid, std::string(""), IMU_V2_MAGNETIC_DEVICE_IDENTIFIER, SensorClass::MAGNETIC, 10, this->frame_id);
+    imu_dev = new SensorDevice(imu_v2, uid, std::string(""), IMU_V2_MAGNETIC_DEVICE_IDENTIFIER, SensorClass::MAGNETIC, 10);
     tfs->sensors.push_back(imu_dev);
     return;
   }
@@ -627,7 +627,7 @@ void TinkerforgeSensors::callbackEnumerate(const char *uid, const char *connecte
     GPS *gps = new GPS();
     gps_create(gps, uid, &(tfs->ipcon));
 
-    SensorDevice *gps_dev = new SensorDevice(gps, uid, topic, GPS_DEVICE_IDENTIFIER, SensorClass::GPS, 10, 10, this->frame_id);
+    SensorDevice *gps_dev = new SensorDevice(gps, uid, topic, GPS_DEVICE_IDENTIFIER, SensorClass::GPS, 10);
     tfs->sensors.push_back(gps_dev);
   }
   else if (device_identifier == DUAL_BUTTON_DEVICE_IDENTIFIER)
@@ -637,7 +637,7 @@ void TinkerforgeSensors::callbackEnumerate(const char *uid, const char *connecte
     DualButton *db = new DualButton();
     dual_button_create(db, uid, &(tfs->ipcon));
 
-    SensorDevice *db_dev = new SensorDevice(db, uid, topic, DUAL_BUTTON_DEVICE_IDENTIFIER, SensorClass::MISC, 10, 10, this->frame_id);
+    SensorDevice *db_dev = new SensorDevice(db, uid, topic, DUAL_BUTTON_DEVICE_IDENTIFIER, SensorClass::MISC, 10);
     tfs->sensors.push_back(db_dev);
   }
   else if (device_identifier == TEMPERATURE_DEVICE_IDENTIFIER)
@@ -647,7 +647,7 @@ void TinkerforgeSensors::callbackEnumerate(const char *uid, const char *connecte
     // Create Temperature device object
     temperature_create(temp, uid, &(tfs->ipcon));
 
-    SensorDevice *temp_dev = new SensorDevice(temp, uid, topic, TEMPERATURE_DEVICE_IDENTIFIER, SensorClass::TEMPERATURE, 10, 10, this->frame_id);
+    SensorDevice *temp_dev = new SensorDevice(temp, uid, topic, TEMPERATURE_DEVICE_IDENTIFIER, SensorClass::TEMPERATURE, 10);
     tfs->sensors.push_back(temp_dev);
 
   }
@@ -657,7 +657,7 @@ void TinkerforgeSensors::callbackEnumerate(const char *uid, const char *connecte
     // Create Ambient Light device object
     AmbientLight *ambient_light = new AmbientLight();
     ambient_light_create(ambient_light, uid, &(tfs->ipcon));
-    SensorDevice *ambient_light_dev = new SensorDevice(ambient_light, uid, topic, AMBIENT_LIGHT_DEVICE_IDENTIFIER, SensorClass::LIGHT, 10, 10, this->frame_id);
+    SensorDevice *ambient_light_dev = new SensorDevice(ambient_light, uid, topic, AMBIENT_LIGHT_DEVICE_IDENTIFIER, SensorClass::LIGHT, 10);
     tfs->sensors.push_back(ambient_light_dev);
   }
   else if (device_identifier == AMBIENT_LIGHT_V2_DEVICE_IDENTIFIER)
@@ -666,7 +666,7 @@ void TinkerforgeSensors::callbackEnumerate(const char *uid, const char *connecte
     // Create Ambient Light device object
     AmbientLightV2 *ambient_v2_light = new AmbientLightV2();
     ambient_light_create(ambient_v2_light, uid, &(tfs->ipcon));
-    SensorDevice *ambient_light_v2_dev = new SensorDevice(ambient_v2_light, uid, topic, AMBIENT_LIGHT_V2_DEVICE_IDENTIFIER, SensorClass::LIGHT, 10, 10, this->frame_id);
+    SensorDevice *ambient_light_v2_dev = new SensorDevice(ambient_v2_light, uid, topic, AMBIENT_LIGHT_V2_DEVICE_IDENTIFIER, SensorClass::LIGHT, 10);
     tfs->sensors.push_back(ambient_light_v2_dev);
   }
   else if (device_identifier == DISTANCE_IR_DEVICE_IDENTIFIER)
@@ -675,7 +675,7 @@ void TinkerforgeSensors::callbackEnumerate(const char *uid, const char *connecte
     // Create Distance IR device object
     DistanceIR *distance_ir = new DistanceIR();
     distance_ir_create(distance_ir, uid, &(tfs->ipcon));
-    SensorDevice *distance_ir_dev = new SensorDevice(distance_ir, uid, topic, DISTANCE_IR_DEVICE_IDENTIFIER, SensorClass::RANGE, 10, 10, this->frame_id);
+    SensorDevice *distance_ir_dev = new SensorDevice(distance_ir, uid, topic, DISTANCE_IR_DEVICE_IDENTIFIER, SensorClass::RANGE, 10);
     tfs->sensors.push_back(distance_ir_dev);
   }
   else if (device_identifier == DISTANCE_US_DEVICE_IDENTIFIER)
@@ -684,7 +684,7 @@ void TinkerforgeSensors::callbackEnumerate(const char *uid, const char *connecte
     // Create Distance US  device object
     DistanceUS *distance_us = new DistanceUS();
     distance_us_create(distance_us, uid, &(tfs->ipcon));
-    SensorDevice *distance_us_dev = new SensorDevice(distance_us, uid, topic, DISTANCE_US_DEVICE_IDENTIFIER, SensorClass::RANGE, 10, 10, this->frame_id);
+    SensorDevice *distance_us_dev = new SensorDevice(distance_us, uid, topic, DISTANCE_US_DEVICE_IDENTIFIER, SensorClass::RANGE, 10);
     tfs->sensors.push_back(distance_us_dev);
   }
   else if (device_identifier == MOTION_DETECTOR_DEVICE_IDENTIFIER)
@@ -693,7 +693,7 @@ void TinkerforgeSensors::callbackEnumerate(const char *uid, const char *connecte
     // Create Motion Detector  device object
     MotionDetector * md = new MotionDetector();
     motion_detector_create(md, uid, &(tfs->ipcon));
-    SensorDevice *md_dev = new SensorDevice(md, uid, topic, MOTION_DETECTOR_DEVICE_IDENTIFIER, SensorClass::MISC, 10, 10, this->frame_id);
+    SensorDevice *md_dev = new SensorDevice(md, uid, topic, MOTION_DETECTOR_DEVICE_IDENTIFIER, SensorClass::MISC, 10);
     tfs->sensors.push_back(md_dev);
   }
 }

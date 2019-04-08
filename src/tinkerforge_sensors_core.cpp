@@ -40,7 +40,13 @@ TinkerforgeSensors::TinkerforgeSensors()
   imu_convergence_speed = 0;
 }
 
-TinkerforgeSensors::TinkerforgeSensors(std::string host, int port)
+TinkerforgeSensors::TinkerforgeSensors(std::string host,
+                                       int port,
+                                       std::string frame_id,
+                                       double linear_acceleration_stddev,
+                                       double angular_velocity_stddev,
+                                       double magnetic_field_stddev,
+                                       double orientation_stddev)
 {
   if (host.length() == 0)
     this->host = "localhost";
@@ -50,6 +56,13 @@ TinkerforgeSensors::TinkerforgeSensors(std::string host, int port)
     this->port = 4223;
   else
     this->port = port;
+
+  this->frame_id = frame_id;
+  this->linear_acceleration_stddev = linear_acceleration_stddev;
+  this->angular_velocity_stddev = angular_velocity_stddev;
+  this->magnetic_field_stddev = magnetic_field_stddev;
+  this->orientation_stddev = orientation_stddev;
+
 }
 
 /*----------------------------------------------------------------------
@@ -182,7 +195,7 @@ void TinkerforgeSensors::publishImuMessage(SensorDevice *sensor)
       f_acc_x = (float(acc_x)/1000.0)*9.80605;
       f_acc_y = (float(acc_y)/1000.0)*9.80605;
       f_acc_z = (float(acc_z)/1000.0)*9.80605;
-      
+
       imu_msg.orientation.x = w;
       imu_msg.orientation.y = z*-1;
       imu_msg.orientation.z = y;
@@ -208,7 +221,7 @@ void TinkerforgeSensors::publishImuMessage(SensorDevice *sensor)
       f_acc_x = float(acc_x) / 100.0;
       f_acc_y = float(acc_y) / 100.0;
       f_acc_z = float(acc_z) / 100.0;
-      
+
       imu_msg.orientation.x = y;
       imu_msg.orientation.y = z;
       imu_msg.orientation.z = w;
@@ -223,13 +236,13 @@ void TinkerforgeSensors::publishImuMessage(SensorDevice *sensor)
     // message header
     imu_msg.header.seq = sensor->getSeq();
     imu_msg.header.stamp = current_time;
-    imu_msg.header.frame_id = sensor->getFrame();
+    imu_msg.header.frame_id = std::string("/") + this->frame_id;
 
     // orientation_covariance
     boost::array<const double, 9> oc =
-      { 0.1, 0.1, 0.1,
-        0.1, 0.1, 0.1,
-        0.1, 0.1, 0.1};
+      { this->orientation_stddev, 0, 0,
+        0, this->orientation_stddev, 0,
+        0, 0, this->orientation_stddev};
 
     imu_msg.orientation_covariance = oc;
 
@@ -240,9 +253,9 @@ void TinkerforgeSensors::publishImuMessage(SensorDevice *sensor)
 
     // velocity_covariance
     boost::array<const double, 9> vc =
-      { 0.1, 0.1, 0.1,
-        0.1, 0.1, 0.1,
-        0.1, 0.1, 0.1};
+    { this->angular_velocity_stddev, 0, 0,
+      0, this->angular_velocity_stddev, 0,
+      0, 0, this->angular_velocity_stddev};
     imu_msg.angular_velocity_covariance = vc;
 
     imu_msg.linear_acceleration.x = f_acc_x;
@@ -251,9 +264,9 @@ void TinkerforgeSensors::publishImuMessage(SensorDevice *sensor)
 
     // linear_acceleration_covariance
     boost::array<const double, 9> lac =
-      { 0.1, 0.1, 0.1,
-        0.1, 0.1, 0.1,
-        0.1, 0.1, 0.1};
+    { this->linear_acceleration_stddev, 0, 0,
+      0, this->linear_acceleration_stddev, 0,
+      0, 0, this->linear_acceleration_stddev};
     imu_msg.linear_acceleration_covariance = lac;
 
     sensor->getPub().publish(imu_msg);
@@ -306,9 +319,9 @@ void TinkerforgeSensors::publishMagneticFieldMessage(SensorDevice *sensor)
     mf_msg.magnetic_field.z = z;
 
     boost::array<const double, 9> mfc =
-      { 0.01, 0.01, 0.01,
-        0.01, 0.01, 0.01,
-        0.01, 0.01, 0.01};
+    { this->magnetic_field_stddev, 0, 0,
+      0, this->magnetic_field_stddev, 0,
+      0, 0, this->magnetic_field_stddev};
 
     mf_msg.magnetic_field_covariance = mfc;
 
@@ -491,7 +504,7 @@ void TinkerforgeSensors::publishIlluminanceMessage(SensorDevice *sensor)
     illum_msg.header.seq =  sensor->getSeq();
     illum_msg.header.stamp = ros::Time::now();
     illum_msg.header.frame_id = sensor->getFrame();
-    
+
     illum_msg.illuminance = illuminance;
     illum_msg.variance = 0;
 
@@ -622,7 +635,7 @@ void TinkerforgeSensors::callbackEnumerate(const char *uid, const char *connecte
   else if (device_identifier == DUAL_BUTTON_DEVICE_IDENTIFIER)
   {
     ROS_INFO_STREAM("found DualButton with UID:" << uid);
-    
+
     DualButton *db = new DualButton();
     dual_button_create(db, uid, &(tfs->ipcon));
 

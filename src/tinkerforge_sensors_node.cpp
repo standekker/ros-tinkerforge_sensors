@@ -28,20 +28,37 @@ int main (int argc, char **argv)
   int imu_convergence_speed;
   int port;
   string host;
+  string frame_id;
+  double linear_acceleration_stddev;
+  double angular_velocity_stddev;
+  double magnetic_field_stddev;
+  double orientation_stddev;
 
   signal(SIGINT, sigintHandler);
 
   // while using different parameters.
   ros::NodeHandle private_node_handle_("~");
-  private_node_handle_.param("rate", rate, int(10));
+  private_node_handle_.param("rate", rate, int(100));
   private_node_handle_.param("host", host, string("localhost"));
-  private_node_handle_.param("port", port, int(4223)); 
+  private_node_handle_.param("port", port, int(4223));
+  private_node_handle_.param("frame_id", frame_id, string("imu_link"));
+  private_node_handle_.param("linear_acceleration_stddev", linear_acceleration_stddev, double(0.1));
+  private_node_handle_.param("angular_velocity_stddev", angular_velocity_stddev, double(0.1));
+  private_node_handle_.param("magnetic_field_stddev", magnetic_field_stddev, double(0.1));
+  private_node_handle_.param("orientation_stddev", orientation_stddev , double(0.1));
+
 
   // create a new LaserTransformer object.
-  TinkerforgeSensors *node_tfs = new TinkerforgeSensors(host, port);
+  TinkerforgeSensors *node_tfs = new TinkerforgeSensors(host,
+                                                        port,
+                                                        frame_id,
+                                                        linear_acceleration_stddev,
+                                                        angular_velocity_stddev,
+                                                        magnetic_field_stddev,
+                                                        orientation_stddev);
 
   node_tfs->init();
-  
+
   // read UIDs;
   std::vector<SensorConf> sensor_conf_vec;
   SensorConf sensor_conf;
@@ -71,7 +88,7 @@ int main (int argc, char **argv)
   for (Iter = node_tfs->sensors.begin(); Iter != node_tfs->sensors.end(); ++Iter)
   {
     std::cout << "node::" << "::" << (*Iter)->getUID() << "::" << (*Iter)->getTopic() << std::endl;
-    
+
     switch((*Iter)->getType())
     {
       case AMBIENT_LIGHT_DEVICE_IDENTIFIER:

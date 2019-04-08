@@ -26,7 +26,13 @@ public:
   //! Constructur
   TinkerforgeSensors();
 
-  TinkerforgeSensors(std::string topic, int port);
+  TinkerforgeSensors(std::string topic,
+                     int port,
+                     std::string frame_id,
+                     double linear_acceleration_stddev,
+                     double angular_velocity_stddev,
+                     double magnetic_field_stddev,
+                     double orientation_stddev);
 
   //! Destructor
   ~TinkerforgeSensors();
@@ -87,6 +93,13 @@ private:
   std::string host;
   //! The Tinkerforge PORT
   int port;
+  //! frame_id
+  std::string frame_id;
+  //! IMU covariances
+  double linear_acceleration_stddev;
+  double angular_velocity_stddev;
+  double magnetic_field_stddev;
+  double orientation_stddev;
   //! The IMU convergence_speed
   int imu_convergence_speed;
   //! Time to correct the imu orientation

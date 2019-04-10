@@ -236,7 +236,7 @@ void TinkerforgeSensors::publishImuMessage(SensorDevice *sensor)
     // message header
     imu_msg.header.seq = sensor->getSeq();
     imu_msg.header.stamp = current_time;
-    imu_msg.header.frame_id = std::string("/") + this->frame_id;
+    imu_msg.header.frame_id = this->frame_id;
 
     // orientation_covariance
     boost::array<const double, 9> oc =
